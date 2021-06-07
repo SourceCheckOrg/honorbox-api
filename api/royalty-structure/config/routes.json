@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/royalty-structures",
+      "handler": "royalty-structure.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/royalty-structures/count",
+      "handler": "royalty-structure.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/royalty-structures/:id",
+      "handler": "royalty-structure.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/royalty-structures",
+      "handler": "royalty-structure.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/royalty-structures/:id",
+      "handler": "royalty-structure.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/royalty-structures/:id",
+      "handler": "royalty-structure.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

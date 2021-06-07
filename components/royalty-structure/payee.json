@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_payee_payees",
+  "info": {
+    "name": "Payee",
+    "icon": "dollar-sign",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "alias": {
+      "type": "string"
+    },
+    "identifier": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "denomination": {
+      "type": "string"
+    }
+  }
+}

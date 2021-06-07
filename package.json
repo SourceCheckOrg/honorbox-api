@@ -1,0 +1,45 @@
+{
+  "name": "honorbox-api",
+  "private": true,
+  "version": "0.1.0",
+  "description": "HonorBox API Server",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi",
+    "debug": "node --inspect=127.0.0.1:9229 ./node_modules/strapi/bin/strapi.js develop"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@spruceid/didkit": "0.2.2",
+    "js-sha3": "^0.8.0",
+    "knex": "<0.20.0",
+    "luxon": "^1.26.0",
+    "mysql": "latest",
+    "pdf-lib": "^1.16.0",
+    "redis": "^3.0.2",
+    "socket.io": "^3.1.1",
+    "strapi": "3.4.6",
+    "strapi-admin": "3.4.6",
+    "strapi-connector-bookshelf": "3.4.6",
+    "strapi-plugin-content-manager": "3.4.6",
+    "strapi-plugin-content-type-builder": "3.4.6",
+    "strapi-plugin-email": "3.4.6",
+    "strapi-plugin-upload": "3.4.6",
+    "strapi-plugin-users-permissions": "3.4.6",
+    "strapi-utils": "3.4.6",
+    "uuid": "^8.3.2"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "28001cad-a7aa-4070-a3e2-df0e5360c83d"
+  },
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

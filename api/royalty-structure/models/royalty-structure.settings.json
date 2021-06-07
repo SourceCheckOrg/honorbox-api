@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "royalty_structures",
+  "info": {
+    "name": "Royalty Structure",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "state_account": {
+      "type": "string"
+    },
+    "payees": {
+      "type": "component",
+      "repeatable": true,
+      "component": "royalty-structure.payee"
+    },
+    "publications": {
+      "via": "royalty_structure",
+      "collection": "publication"
+    },
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "royalty_structures"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api:
+    build: 
+      context: ../
+    image: monetiza/honorbox-api
+    container_name: honorbox-api
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - DATABASE_CLIENT=mysql
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_PORT=${VIRTUAL_PORT}
+    depends_on:
+      - redis
+      - database
+
+  database:
+    image: mysql
+    container_name: honorbox-db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - ../data/db:/var/lib/mysql
+
+  redis:
+    image: redis
+    container_name: honorbox-redis
+    restart: unless-stopped
+
+networks:
+  default:
+    external:
+      name: webproxy

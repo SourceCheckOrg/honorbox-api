@@ -1,0 +1,76 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/signup",
+      "handler": "Auth.signUp",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ssi/signup",
+      "handler": "Auth.ssiSignUpRequest",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ssi/signup",
+      "handler": "Auth.ssiSignUp",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ssi/signin",
+      "handler": "Auth.ssiSignInRequest",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ssi/signin",
+      "handler": "Auth.ssiSignIn",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ssi/publisher/vc",
+      "handler": "PublisherCredentials.publisherCredentialOffer",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ssi/publisher/vc",
+      "handler": "PublisherCredentials.publisherCredentialIssuance",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/ssi/publisher/vp",
+      "handler": "PublisherCredentials.publisherPresentationRequest",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/ssi/publisher/vp",
+      "handler": "PublisherCredentials.publisherPresentationProcessing",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

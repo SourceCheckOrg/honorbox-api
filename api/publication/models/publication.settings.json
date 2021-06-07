@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "publications",
+  "info": {
+    "name": "Publication",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "pdf_raw": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "royalty_structure": {
+      "model": "royalty-structure",
+      "via": "publications"
+    },
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "publications"
+    },
+    "pdf_raw_hash": {
+      "type": "string"
+    },
+    "uuid": {
+      "type": "string"
+    },
+    "publisher_vp": {
+      "type": "json"
+    },
+    "publisher_vc_issued": {
+      "type": "boolean"
+    },
+    "pdf_signed": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "published": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
