@@ -259,8 +259,13 @@ module.exports = {
     // Perform update
     await strapi.services.publication.update({ id }, data, { files });
 
-    // Delete temporary copy of signed file and temporary dir
+    // Delete temporary copy of signed file
     fs.unlinkSync(signedFile.path);
+    
+    // Delete qrcode image file
+    fs.unlinkSync(`${process.cwd()}/public/uploads/${publication.uuid}/qrcode.png`);
+    
+    // Remove temp dir
     fs.rmdirSync(`${process.cwd()}/public/uploads/${publication.uuid}`);
 
     // Send response
@@ -304,7 +309,7 @@ module.exports = {
 
       return {
         result: 'Success',
-        message: `The file signed by ${vp.verifiableCredential.credentialSubject.publisher} was successfully checked by Monetiza`
+        message: `The file signed by ${vp.verifiableCredential.credentialSubject.publisher} was successfully checked by SourceCheck`
       }
     } catch (err) {
       return {
