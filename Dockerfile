@@ -6,9 +6,10 @@ RUN apt-get update \
   && apt-get update \
   && apt-get install -y nodejs
 
-WORKDIR /honorbox-api
-COPY ./honorbox-api .
 ENV NODE_ENV production
+WORKDIR /honorbox-api
+COPY ./ .
+RUN npm run build
 EXPOSE 1337
 
 CMD ["npm", "start"]

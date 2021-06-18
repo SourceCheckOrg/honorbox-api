@@ -1,7 +1,7 @@
-# Monetiza HonorBox API
+# SourceCheck HonorBox API
 
 API server for the [HonorBox
-Project](https://github.com/monetiza/honorbox), based on
+Project](https://github.com/SourceCheckOrg/honorbox), based on
 [Strapi](https://strapi.io).
 
 
@@ -14,7 +14,7 @@ are assumed to be running on the localhost, at their default ports. In
 production this would, of course, not be recommended.
 
 A simple dockerized setup for both can be found at [HonorBox
-DB](https://github.com/monetiza/honorbox-db).
+DB](https://github.com/SourceCheckOrg/honorbox-db).
 
 ### Node.js
 
@@ -87,7 +87,7 @@ should be set as the environment variable `URL` in the file `.env`.
 
 Clone this repository:
 ```
-$ git clone https://github.com/monetiza/honorbox-api.git
+$ git clone https://github.com/SourceCheckOrg/honorbox-api.git
 ```
 
 Install the dependencies
