@@ -29,6 +29,7 @@
     "strapi-plugin-email": "3.4.6",
     "strapi-plugin-upload": "3.4.6",
     "strapi-plugin-users-permissions": "3.4.6",
+    "strapi-provider-email-nodemailer": "^3.6.3",
     "strapi-utils": "3.4.6",
     "uuid": "^8.3.2"
   },

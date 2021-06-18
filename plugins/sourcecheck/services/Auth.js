@@ -7,59 +7,28 @@
  */
 
 const uuidv4 = require('uuid').v4;
-const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
 
   sendConfirmationEmail: async (user) => {
-    const userService = strapi.plugins["users-permissions"].services.user;
-    const userPermissionService = strapi.plugins["users-permissions"].services.userspermissions;
-    
-    const pluginStore = await strapi.store({
-      environment: "",
-      type: "plugin",
-      name: "users-permissions",
-    });
-
-    const settings = await pluginStore
-      .get({ key: "email" })
-      .then((storeEmail) => storeEmail["email_confirmation"].options);
-
-    const userInfo = sanitizeEntity(user, {
-      model: strapi.query("user", "users-permissions").model,
-    });
-
     const confirmationToken = uuidv4();
-
+    const userService = strapi.plugins["users-permissions"].services.user;
     await userService.edit({ id: user.id }, { confirmationToken });
-
     const host = strapi.config.get('frontend.host', 'http://localhost');
-    let port = strapi.config.get('frontend.port', 4000);
-    port = (port !== 80) ? `:${port}` : ''; 
-    const url = `${host}${port}/email-confirmation`;
-    console.log('Auth.sendConfirmationEmail - url: ', url);
-
-    settings.message = await userPermissionService.template(settings.message, {
-      URL: url,
-      USER: userInfo,
-      CODE: confirmationToken,
-    });
-
-    settings.object = await userPermissionService.template(settings.object, {
-      USER: userInfo,
-    });
-
-    // Send an email to the user.
-    await strapi.plugins["email"].services.email.send({
-      to: user.email,
-      from:
-        settings.from.email && settings.from.name
-          ? `${settings.from.name} <${settings.from.email}>`
-          : undefined,
-      replyTo: settings.response_email,
-      subject: settings.object,
-      text: settings.message,
-      html: settings.message,
-    });
+    const port = strapi.config.get('frontend.port', 4000);
+    const url = `${host}${port != 80 ? `:${port}` : ``}/email-confirmation?confirmation=${confirmationToken}`;
+    const from = strapi.config.get('mail.defaultFrom');
+    const to = user.email;
+    const replyTo = strapi.config.get('mail.defaultReplyTo');
+    const subject = 'HonorBox - Email confirmation';
+    const text = `Thank you for registering!\n` +  
+                 `You have to confirm your email address. Open the link below in your browser:\n` + 
+                 `${url}\n` + 
+                 `Thanks!` 
+    const html = `<p>Thank you for registering!</p>` + 
+                 `<p>You have to confirm your email address. Please click on the link below:</p>` + 
+                 `<p><a href="${url}">${url}</a></p>`+ 
+                 `<p>Thanks!</p>`;
+    await strapi.plugins["email"].services.email.send({ from, to, replyTo, subject, text, html });
   },
 };
