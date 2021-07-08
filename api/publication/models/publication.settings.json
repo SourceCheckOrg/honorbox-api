@@ -59,6 +59,15 @@
     "published": {
       "type": "boolean",
       "default": false
+    },
+    "pdf_embedded": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

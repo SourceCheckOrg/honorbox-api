@@ -128,7 +128,7 @@ module.exports = {
  
     // Draw a string of text toward the top of the page
     const fontSize = 16;
-    newPage.drawText(
+    newPage.drawText( // TODO update this text
       `This eBook was published using the SourceCheck.org HonorBox\n` + 
       `system, which notarizes content and royalty commitments as\n` + 
       `authentic. If you enjoyed it, the publisher has requested a\n` + 
@@ -164,13 +164,6 @@ module.exports = {
       height: pngDims.height,
     })
 
-    // Attach vp to the pdf
-    const buffer = Buffer.from(JSON.stringify(publication.publisher_vp)).toString('base64');
-    await pdfDoc.attach(buffer, "vp.jsonld", {
-      mimeType: "application/ld+json",
-      description: "Verifiable Presentation",
-    });
-
     // Save file to disk
     const name = publication.slug;
     const path = `${process.cwd()}/public/uploads/${uuid}/${name}`;
@@ -182,45 +175,5 @@ module.exports = {
     const size = fs.statSync(path).size;
     return { path, name, type, size };
   },
-
-  async reconstructRaw(uuid, name, uploadedPath) {
-    // Create temporary directory if it doesn't exist
-    try {
-      fs.mkdirSync(`${process.cwd()}/public/uploads/${uuid}`);
-    } catch (err) {}
-
-    // Use a standard blank file as a base file to achieve deterministic results
-    const blankBytes = fs.readFileSync(BLANK_PATH);
-    const pdfDoc = await PDFDocument.load(blankBytes, { updateMetadata: false });
-    pdfDoc.removePage(0);
-
-    // Load the uploaded file
-    const uploadedFileBytes = fs.readFileSync(uploadedPath);
-    const uploadedFile = await PDFDocument.load(uploadedFileBytes, { updateMetadata: false });
-
-    // Extract the verifiable presentation and parse it as an object
-    const attachments = extractAttachments(uploadedFile);
-    const vpFile = attachments.find((attachment) => attachment.name === 'vp.jsonld');
-    const vpString = Utf8ArrayToStr(vpFile.data);
-    const vp = JSON.parse(vpString);
-    
-    // Copy pages from uploaded file to base file
-    let pageIndexes = Array.from(Array(uploadedFile.getPageCount() - 1).keys());
-    const pages = await pdfDoc.copyPages(uploadedFile, pageIndexes);
-    for (let i = 0; i < pages.length; i++) {
-      pdfDoc.addPage(pages[i]);
-    }
-
-    // Save reconstructed file in the temporary directory created for this verification
-    const path = `${process.cwd()}/public/uploads/${uuid}/${name}`;
-    const pdfBytes = await pdfDoc.save();
-    fs.writeFileSync(path, pdfBytes);
-
-    // Calculate hash
-    const data = fs.readFileSync(path);
-    const hash = "0x" + keccak256(data);
-
-    // Return the verifiable presentation and the hash of the reconstructed raw file
-    return { vp, hash };
-  },
+  
 };

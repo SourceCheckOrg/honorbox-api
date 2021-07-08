@@ -18,13 +18,6 @@ async function removeSignedPDF(publication) {
   }
 }
 
-function cleanUpCredentialsFields(data) {
-  data.publisher_vc_issued = false;
-  data.publisher_vp = null;
-  data.pdf_signed = null;
-  data.published = false;
-}
-
 module.exports = {
   /**
    * Create a publication
@@ -97,9 +90,6 @@ module.exports = {
 
           // Remove the old signed file, if it exists
           await removeSignedPDF(publication);
-
-          // Clean up fields related to credentials
-          cleanUpCredentialsFields(data);
         }
 
         // Store hash of raw file
@@ -123,7 +113,6 @@ module.exports = {
         if (typeof data.pdf_raw === 'object') {
           removeRawPDF(publication);
           removeSignedPDF(publication);
-          cleanUpCredentialsFields(data);
         }
 
         // Save publication
@@ -244,10 +233,7 @@ module.exports = {
     // Publication is already published
     if (publication.published) return ctx.badRequest("Publication is already published!");
 
-    // Publishing requires a verifiable presentation signed by the publisher
-    if (!publication.publisher_vp) return ctx.badRequest("Publication is not in the proper state!");
-
-    // Attach credential
+      // Attach credential
     const signedFile = await attachData(publication);
 
     // Update published flag
@@ -275,47 +261,4 @@ module.exports = {
     }
   },
 
-  /*
-   * Verify uploaded file
-   */
-  async verify(ctx) {
-    // Parse uploaded file
-    const { files } = parseMultipartData(ctx);
-    const uploadedFile = files.upload;
-
-    // Generate an unique identifier for this verification
-    const uuid = uuidv4();
-
-    try {
-      // Extract verifiable credential from uploaded file and reconstruct raw file (hash)
-      const { vp, hash } = await reconstructRaw(uuid, uploadedFile.name, uploadedFile.path);
-
-      // TODO check VP signature using didkit
-      
-      // Check if file was not tempered
-      const contentHash = vp.verifiableCredential.credentialSubject.content;
-      if (hash !== contentHash) {
-        return {
-          result: 'Error',
-          message: "PDF file tampered!"
-        };
-      }
-
-      // Delete reconstructed file and temporary directory
-      const dirPath = `${process.cwd()}/public/uploads/${uuid}`;
-      const path = `${dirPath}/${uploadedFile.name}`;
-      fs.unlinkSync(path);
-      fs.rmdirSync(dirPath);
-
-      return {
-        result: 'Success',
-        message: `The file signed by ${vp.verifiableCredential.credentialSubject.publisher} was successfully checked by SourceCheck`
-      }
-    } catch (err) {
-      return {
-        result: 'Error',
-        message: "PDF file doesn't contain valid verifiable credential!"
-      };
-    }
-  }
 };
