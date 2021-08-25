@@ -151,6 +151,18 @@ requested to create an admin user.
 
 Fill in the form and click on the button "LET'S START"
 
+### Configure email authentication
+
+From the administration panel, click on "Settings"
+* Under USERS & PERMISSIONS PLUGIN, click on "Advanced Settings"
+* Make sure the following options are set to `ON`:
+  * `One account per email address` 
+  * `Enable sign-ups`
+  * `Enable email confirmation`
+* Set the `Redirection url` field to HonorBox UI sign-in page
+  * For a development environment the value should be `http://localhost:3000/sign-in` 
+
+
 ### Permissions configuration
 
 For now, some initial permissions should be configured manually.
