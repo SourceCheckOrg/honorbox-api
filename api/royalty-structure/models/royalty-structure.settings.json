@@ -33,6 +33,9 @@
       "plugin": "users-permissions",
       "model": "user",
       "via": "royalty_structures"
+    },
+    "notes": {
+      "type": "text"
     }
   }
 }
