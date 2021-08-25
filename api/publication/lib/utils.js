@@ -1,7 +1,8 @@
 const fs = require("fs");
 const { keccak256 } = require("js-sha3");
 const { PDFDocument, PDFName, PDFDict, PDFArray, PDFStream, StandardFonts, decodePDFRawStream, rgb } = require("pdf-lib");
-const QRCode = require('qrcode')
+const QRCode = require('qrcode');
+const { get } = require("strapi-utils/lib/policy");
 
 const BLANK_PATH = `${process.cwd()}/public/uploads/blank.pdf`;
 
@@ -66,6 +67,24 @@ function Utf8ArrayToStr(array) {
   }
 
   return out;
+}
+
+function getRevenueShareText(revenueShare) {
+  let text = '';
+  revenueShare.payees.forEach((payee) => {
+    text += `${payee.alias}: ${payee.amount}%\n`
+  });
+  text += '\n';
+  return text;
+}
+
+function getPublisherNotes(revenueShare) {
+  let text = '';
+  if (revenueShare.notes) {
+    text = `Publisher notes: \n` + 
+          `${revenueShare.notes}\n\n`;
+  }
+  return text;
 }
 
 module.exports = {
@@ -133,8 +152,13 @@ module.exports = {
       `system, which notarizes content and royalty commitments as\n` + 
       `authentic. If you enjoyed it, the publisher has requested a\n` + 
       `suggested donation of 10 $USD to be distributed between the\n` +
-      `contributors. To make a donation, use a Solana-compatible\n` +
-      `wallet and send your donation to: \n\n` +
+      `contributors.\n\n` +
+      `SourceCheck receives 1% of the donated valued and the remaining\n` +
+      `is split as following:\n` + 
+      getRevenueShareText(publication.royalty_structure) + 
+      getPublisherNotes(publication.royalty_structure) + 
+      `To make a donation, use a Solana-compatible wallet and send\n` +
+      `send your donation to: \n\n` +
       `${publication.royalty_structure.account}\n\n` +
       `Or use the QR code bellow:`,
     {
@@ -156,10 +180,10 @@ module.exports = {
     const qrcodeBytes = fs.readFileSync(qrcodePath);
     const qrcodeImage = await pdfDoc.embedPng(qrcodeBytes)
     const pngDims = qrcodeImage.scale(1.2)
-
+    
     newPage.drawImage(qrcodeImage, {
-      x: newPage.getWidth() / 2 - pngDims.width / 2,
-      y: newPage.getHeight() / 2 - pngDims.height,
+      x: 50,
+      y: 50,
       width: pngDims.width,
       height: pngDims.height,
     })

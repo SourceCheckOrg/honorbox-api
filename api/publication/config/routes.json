@@ -26,8 +26,8 @@
     },
     {
       "method": "PUT",
-      "path": "/publications/publish/:id",
-      "handler": "publication.publish",
+      "path": "/publications/embed/:id",
+      "handler": "publication.embed",
       "config": {
         "policies": []
       }

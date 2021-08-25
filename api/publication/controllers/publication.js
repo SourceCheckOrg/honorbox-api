@@ -11,9 +11,9 @@ async function removeRawPDF(publication) {
   }
 }
 
-async function removeSignedPDF(publication) {
-  if (publication.pdf_signed) {
-    const file = await strapi.plugins['upload'].services.upload.fetch({ id: publication.pdf_signed.id });
+async function removeEmbeddedPDF(publication) {
+  if (publication.pdf_embedded) {
+    const file = await strapi.plugins['upload'].services.upload.fetch({ id: publication.pdf_embedded.id });
     await strapi.plugins['upload'].services.upload.remove(file);
   }
 }
@@ -88,8 +88,8 @@ module.exports = {
           // Remove the old file
           await removeRawPDF(publication);
 
-          // Remove the old signed file, if it exists
-          await removeSignedPDF(publication);
+          // Remove the old embedded file, if it exists
+          await removeEmbeddedPDF(publication);
         }
 
         // Store hash of raw file
@@ -111,8 +111,8 @@ module.exports = {
 
         // If user is deleting the pdf file, pdf_raw is explicitly set to null (type 'object'), otherwise pdf_raw is not set in the request (type 'undefined')
         if (typeof data.pdf_raw === 'object') {
-          removeRawPDF(publication);
-          removeSignedPDF(publication);
+          await removeRawPDF(publication);
+          await removeEmbeddedPDF(publication);
         }
 
         // Save publication
@@ -135,7 +135,7 @@ module.exports = {
 
     // If the publication contains files attached, delete them as well
     await removeRawPDF(publication);
-    await removeSignedPDF(publication);
+    await removeEmbeddedPDF(publication);
 
     // Delete publication
     await strapi.services.publication.delete({ id });
@@ -221,32 +221,29 @@ module.exports = {
   },
 
   /**
-   * Publish publication
+   * Embed data into publication
    */
-  async publish(ctx) {
+  async embed(ctx) {
     const { id } = ctx.params;
 
     // Check if the user is the owner of the publication
     const publication = await strapi.services.publication.findOne({ id, 'owner.id': ctx.state.user.id });
-    if (!publication) return ctx.unauthorized("You can't delete this publication!");
+    if (!publication) return ctx.unauthorized("You can't change this publication!");
 
-    // Publication is already published
-    if (publication.published) return ctx.badRequest("Publication is already published!");
+    // Publication has already embedded data
+    if (publication.pdf_embedded) return ctx.badRequest("Publication has already embedded data!");
 
-      // Attach credential
-    const signedFile = await attachData(publication);
+    // Embed QR code
+    const pdfEmbedded = await attachData(publication);
 
-    // Update published flag
-    const data = { published: true };
-
-    // Store signed PDF file in publication
-    const files = { pdf_signed: signedFile };
+    // Store embedded PDF file in publication
+    const files = { pdf_embedded: pdfEmbedded };
 
     // Perform update
-    await strapi.services.publication.update({ id }, data, { files });
+    await strapi.services.publication.update({ id }, {}, { files });
 
     // Delete temporary copy of signed file
-    fs.unlinkSync(signedFile.path);
+    fs.unlinkSync(pdfEmbedded.path);
     
     // Delete qrcode image file
     fs.unlinkSync(`${process.cwd()}/public/uploads/${publication.uuid}/qrcode.png`);
