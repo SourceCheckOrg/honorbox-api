@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "twitters",
+  "info": {
+    "name": "Twitter",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "twitters"
+    },
+    "username": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "verification_tweet_id": {
+      "type": "string"
+    },
+    "credential": {
+      "type": "json"
+    },
+    "date": {
+      "type": "datetime"
+    }
+  }
+}

@@ -31,9 +31,9 @@
       "via": "publications"
     },
     "owner": {
+      "via": "publications",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "publications"
+      "model": "user"
     },
     "pdf_raw_hash": {
       "type": "string"

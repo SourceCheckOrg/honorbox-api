@@ -63,20 +63,30 @@
       "type": "string",
       "minLength": 3,
       "unique": true,
-      "configurable": true,
       "required": false
     },
     "royalty_structures": {
-      "via": "owner",
-      "collection": "royalty-structure"
+      "collection": "royalty-structure",
+      "via": "owner"
     },
     "publications": {
-      "via": "owner",
-      "collection": "publication"
+      "collection": "publication",
+      "via": "owner"
     },
     "publisher": {
+      "model": "publisher",
+      "via": "owner"
+    },
+    "eth_addr": {
+      "type": "string"
+    },
+    "twitters": {
       "via": "owner",
-      "model": "publisher"
+      "collection": "twitter"
+    },
+    "domains": {
+      "via": "owner",
+      "collection": "domain"
     }
   }
 }

@@ -1,0 +1,44 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/signin",
+      "handler": "ethereumauth.signIn",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/signin/nonce",
+      "handler": "ethereumauth.signInNonce",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/signup",
+      "handler": "ethereumauth.signUp",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/signup/verification",
+      "handler": "ethereumauth.signUpEmailVerification",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/signup/nonce",
+      "handler": "ethereumauth.signUpNonce",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

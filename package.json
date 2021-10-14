@@ -12,14 +12,15 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@spruceid/didkit": "0.2.2",
+    "@spruceid/didkit": "0.2.3",
+    "ethers": "^5.4.7",
     "js-sha3": "^0.8.0",
     "knex": "<0.20.0",
     "luxon": "^1.26.0",
     "mysql": "latest",
     "pdf-lib": "^1.16.0",
     "qrcode": "^1.4.4",
-    "redis": "^3.0.2",
+    "redis": "4.0.0-rc.2",
     "socket.io": "^3.1.1",
     "strapi": "3.4.6",
     "strapi-admin": "3.4.6",
@@ -31,6 +32,7 @@
     "strapi-plugin-users-permissions": "3.4.6",
     "strapi-provider-email-nodemailer": "^3.6.3",
     "strapi-utils": "3.4.6",
+    "twitter-api-v2": "^1.5.2",
     "uuid": "^8.3.2"
   },
   "author": {

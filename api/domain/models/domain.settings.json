@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "domains",
+  "info": {
+    "name": "Domain",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "owner": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "domains"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "credential": {
+      "type": "json"
+    },
+    "date": {
+      "type": "datetime"
+    }
+  }
+}

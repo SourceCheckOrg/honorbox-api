@@ -13,5 +13,14 @@ const redis = require("redis");
 
 module.exports = async () => {
   process.nextTick(() => {
+    // Setup redis client and register it in strapi main object to use it globally
+    const redisHost = strapi.config.get("redis.host");
+    const redisPort = strapi.config.get("redis.port");
+    const url = `redis://${redisHost}:${redisPort}`;
+    console.log("Initializing Redis at: ", url);
+    const client = redis.createClient({ url });
+    client.connect()
+    strapi.redis = client;
   });
 };
+

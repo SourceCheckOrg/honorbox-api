@@ -30,9 +30,9 @@
       "collection": "publication"
     },
     "owner": {
+      "via": "royalty_structures",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "royalty_structures"
+      "model": "user"
     },
     "notes": {
       "type": "text"

@@ -17,9 +17,9 @@
       "type": "string"
     },
     "owner": {
+      "via": "publisher",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "publisher"
+      "model": "user"
     }
   }
 }

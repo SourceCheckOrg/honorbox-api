@@ -146,7 +146,7 @@ module.exports = {
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
  
     // Draw a string of text toward the top of the page
-    const fontSize = 16;
+    const fontSize = 12;
     newPage.drawText( // TODO update this text
       `This eBook was published using the SourceCheck.org HonorBox\n` + 
       `system, which notarizes content and royalty commitments as\n` + 
@@ -166,7 +166,7 @@ module.exports = {
       y: height - 4 * fontSize,
       size: fontSize,
       font: helveticaFont,
-      color: rgb(0, 0.53, 0.71),
+      color: rgb(0, 0, 0),
     });
 
     // Create directory if it doesn't exist
