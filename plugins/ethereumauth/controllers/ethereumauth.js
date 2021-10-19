@@ -9,12 +9,12 @@ async function sendConfirmationEmail(user) {
   const confirmationToken = uuidv4();
   const userService = strapi.plugins["users-permissions"].services.user;
   await userService.edit({ id: user.id }, { confirmationToken });
-  const frontendUrl = strapi.config.get('frontend.url', 3000);
-  const url = `${frontendUrl}/email-verification?confirmationToken=${confirmationToken}`;
+  const profileUrl = strapi.config.get('profile.url');
+  const url = `${profileUrl}/email-verification?confirmationToken=${confirmationToken}`;
   const from = strapi.config.get('mail.defaultFrom');
   const to = user.email;
   const replyTo = strapi.config.get('mail.defaultReplyTo');
-  const subject = 'HonorBox - Email confirmation';
+  const subject = 'SourceCheck Profile - Email confirmation';
   const text = `Thank you for registering!\n` +  
                `You have to confirm your email address. Open the link below in your browser:\n` + 
                `${url}\n` + 
