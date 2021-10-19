@@ -152,15 +152,15 @@ module.exports = {
     // Draw a string of text toward the top of the page
     const fontSize = 12;
     newPage.drawText( // TODO update this text
-      `This eBook was published using the SourceCheck.org HonorBox system, which \n` + 
-      `cryptographically verifies publisher profile and notarizes content as authentic.\n` +  
+      `This eBook was published using the SourceCheck.org HonorBox Platform, which\n` + 
+      `cryptographically verifies publisher profile.\n` +  
       `If you enjoyed it, the publisher has requested a suggested donation equivalent to\n` + 
       `10 $USD to be distributed between the contributors.\n` + 
-      `SourceCheck receives 2% of the donated valued to fund the development of HonorBox\n` +
-      `platform. Check out the verified profile at:\n\n` +
+      `SourceCheck receives 2% of the donated valued to support the development of HonorBox\n` +
+      `Platform. Check out the verified profile at:\n\n` +
       `${getProfileUrl(publication.owner)}\n\n` +
-      `To make a donation, send MATIC or any ERC-20 token to the following address following\n` +
-      `address (ON POLYGON MAINNET ONLY): \n\n` +
+      `To make a donation, send MATIC or any ERC-20 token to the following address (VALID \n` +
+      `ONLY ON POLYGON MAINNET): \n\n` +
       `${publication.owner.eth_profile_addr}\n\n` +
       `Or use the QR code bellow:`,
     {
