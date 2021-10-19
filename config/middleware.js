@@ -1,15 +1,10 @@
 module.exports = ({ env }) => {
   const adminUrl = env('URL', 'http://localhost:1337');
+  const frontendUrl = env("FRONTEND_URL", "http://localhost:3000");
+  const profileUrl = env("PROFILE_URL", "http://localhost:3001");
+  const previewUrl = env("PREVIEW_URL", "http://localhost:3002");
 
-  const frontendHost = env("FRONTEND_HOST", "http://localhost");
-  const frontendPort = env.int("FRONTEND_PORT", 3000);
-  const frontendUrl = frontendPort !== 80 ? `${frontendHost}:${frontendPort}` : frontendHost;
-
-  const previewHost = env("PREVIEW_HOST", "http://localhost");
-  const previewPort = env.int("PREVIEW_PORT", 3000);
-  const previewUrl = previewPort !== 80 ? `${previewHost}:${previewPort}` : previewHost;
-
-  const origin = [adminUrl, frontendUrl, previewUrl]
+  const origin = [adminUrl, frontendUrl, profileUrl, previewUrl]
 
   if (env('NODE_ENV') === 'development') {
     origin.push('http://localhost:1337');
