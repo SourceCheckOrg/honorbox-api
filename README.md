@@ -175,9 +175,9 @@ From the administration panel, click on "Settings"
       `findone`, `update`
     * Under Permissions/Application/Publisher, check `create`, `find`, `findone`, `update`
     * Under Permissions/Application/Twitter, check `find`, `verify`
+    * Under Permissions/EthereumAuth/EthereumAuth, check `updateuser`
 * Under USERS & PERMISSIONS PLUGIN, click on "Roles" again
 * Click on the "Edit" button (Pencil) for the **Public** role
-    * Under Permissions/EthereumAuth/EthereumAuth, check `signin`, `signinnonce`, `signup`, `signupemailverification`, `signupnonce`, `updateuser`
-    * Under Permissions/SourceCheck/Auth, check `signup`, `ssisignin`, `ssisigninrequest`, `ssisignup`, `ssisignuprequest`
+    * Under Permissions/EthereumAuth/EthereumAuth, check `signin`, `signinnonce`, `signup`, `signupemailverification`, `signupnonce`
 
 Congratulations! The API server is properly configured, up and running!
