@@ -156,7 +156,7 @@ module.exports = {
     if (validEmailAddress) {
       params.email = params.email.toLowerCase();
     } else {
-      return ctx.badRequest('Invalid email address!')
+      return ctx.badRequest('Invalid email address!');
     }
 
     // Check if there is already an user with the provided email
@@ -249,6 +249,29 @@ module.exports = {
     ctx.send({
       message: 'ok',
       nonce,
+    });
+  },
+
+  updateUser: async (ctx) => {
+    // Check if data was sent to update
+    const { ethAddr, ethProfileAddr } = ctx.request.body;
+    if (!ethAddr && !ethProfileAddr) {
+      return ctx.badRequest('No data sent to update!');
+    }
+
+    // Update user
+    const id = ctx.state.user.id;
+    const data = {}
+    if (ethAddr) {
+      data.eth_addr = ethAddr;
+    }
+    if (ethProfileAddr) {
+      data.eth_profile_addr = ethProfileAddr;
+    }
+    await strapi.query('user', 'users-permissions').update({ id }, data); 
+
+    ctx.send({
+      message: 'ok',
     });
   }
 

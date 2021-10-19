@@ -81,12 +81,15 @@
       "type": "string"
     },
     "twitters": {
-      "via": "owner",
-      "collection": "twitter"
+      "collection": "twitter",
+      "via": "owner"
     },
     "domains": {
-      "via": "owner",
-      "collection": "domain"
+      "collection": "domain",
+      "via": "owner"
+    },
+    "eth_profile_addr": {
+      "type": "string"
     }
   }
 }

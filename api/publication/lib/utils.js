@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { keccak256 } = require("js-sha3");
-const { PDFDocument, PDFName, PDFDict, PDFArray, PDFStream, StandardFonts, decodePDFRawStream, rgb } = require("pdf-lib");
+const { PDFDocument, PDFName, PDFDict, PDFArray, PDFStream, PDFString, StandardFonts, decodePDFRawStream, rgb } = require("pdf-lib");
 const QRCode = require('qrcode');
 const { get } = require("strapi-utils/lib/policy");
 
@@ -87,6 +87,10 @@ function getPublisherNotes(revenueShare) {
   return text;
 }
 
+function getProfileUrl(owner) {
+  return `https://profile.sourcecheck.org/${owner.eth_profile_addr}`;
+}
+
 module.exports = {
   async buildRaw(uuid, name, originalPath) {
     // Use a standard blank file in order to achieve deterministic results
@@ -144,22 +148,20 @@ module.exports = {
     
     // Embed the font
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
- 
+
     // Draw a string of text toward the top of the page
     const fontSize = 12;
     newPage.drawText( // TODO update this text
-      `This eBook was published using the SourceCheck.org HonorBox\n` + 
-      `system, which notarizes content and royalty commitments as\n` + 
-      `authentic. If you enjoyed it, the publisher has requested a\n` + 
-      `suggested donation of 10 $USD to be distributed between the\n` +
-      `contributors.\n\n` +
-      `SourceCheck receives 1% of the donated valued and the remaining\n` +
-      `is split as following:\n` + 
-      getRevenueShareText(publication.royalty_structure) + 
-      getPublisherNotes(publication.royalty_structure) + 
-      `To make a donation, use a Solana-compatible wallet and send\n` +
-      `send your donation to: \n\n` +
-      `${publication.royalty_structure.account}\n\n` +
+      `This eBook was published using the SourceCheck.org HonorBox system, which \n` + 
+      `cryptographically verifies publisher profile and notarizes content as authentic.\n` +  
+      `If you enjoyed it, the publisher has requested a suggested donation equivalent to\n` + 
+      `10 $USD to be distributed between the contributors.\n` + 
+      `SourceCheck receives 2% of the donated valued to fund the development of HonorBox\n` +
+      `platform. Check out the verified profile at:\n\n` +
+      `${getProfileUrl(publication.owner)}\n\n` +
+      `To make a donation, send MATIC or any ERC-20 token to the following address following\n` +
+      `address (ON POLYGON MAINNET ONLY): \n\n` +
+      `${publication.owner.eth_profile_addr}\n\n` +
       `Or use the QR code bellow:`,
     {
       x: 50,
@@ -174,16 +176,16 @@ module.exports = {
       fs.mkdirSync(`${process.cwd()}/public/uploads/${uuid}`);
     } catch (err) {}
 
-    // Create qrcode image containing donation (shared) account address
+    // Create qrcode image containing donation address (profile smart contract address)
     const qrcodePath = `${process.cwd()}/public/uploads/${uuid}/qrcode.png`;
-    await QRCode.toFile(qrcodePath, publication.royalty_structure.account);
+    await QRCode.toFile(qrcodePath, publication.owner.eth_profile_addr);
     const qrcodeBytes = fs.readFileSync(qrcodePath);
     const qrcodeImage = await pdfDoc.embedPng(qrcodeBytes)
     const pngDims = qrcodeImage.scale(1.2)
     
     newPage.drawImage(qrcodeImage, {
-      x: 50,
-      y: 50,
+      x: 35,
+      y: 275,
       width: pngDims.width,
       height: pngDims.height,
     })

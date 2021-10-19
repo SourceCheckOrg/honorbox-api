@@ -39,6 +39,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/user/update",
+      "handler": "ethereumauth.updateUser",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

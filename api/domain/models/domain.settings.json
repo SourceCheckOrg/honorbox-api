@@ -12,9 +12,9 @@
   },
   "attributes": {
     "owner": {
+      "via": "domains",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "domains"
+      "model": "user"
     },
     "domain": {
       "type": "string"

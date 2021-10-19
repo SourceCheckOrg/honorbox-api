@@ -12,9 +12,9 @@
   },
   "attributes": {
     "owner": {
+      "via": "twitters",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "twitters"
+      "model": "user"
     },
     "username": {
       "type": "string"

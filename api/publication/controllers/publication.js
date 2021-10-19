@@ -233,6 +233,8 @@ module.exports = {
     // Publication has already embedded data
     if (publication.pdf_embedded) return ctx.badRequest("Publication has already embedded data!");
 
+    if (!publication.owner.eth_profile_addr) return ctx.badRequest("Publisher had not deployed verified profile!");
+
     // Embed QR code
     const pdfEmbedded = await attachData(publication);
 
