@@ -59,12 +59,13 @@ Once DIDKit is built, use it to generate a DID and a DID keypair:
 ```
 $ ./target/debug/didkit generate-ed25519-key > key.jwk
 $ ./target/debug/didkit key-to-did key -k key.jwk > did.txt
+$ ./target/debug/didkit key-to-verification-method key > verificationMethod.txt
 ```
 
-*NOTE:* Save the files `key.jwk` and `did.txt` in a safe place. The content of
-the file `key.jwt` will be used as the environment variable `ISSUER_KEY` and the
-content of the file `did.txt` will be used as the environment variable
-`ISSUER_DID`. These values should be set in the file `.env` of this repository.
+*NOTE:* Save the files `key.jwk`, `did.txt` and `verificationMethod.txt` in a safe 
+place. The content of the file `key.jwt` will be used as the environment variable 
+`ISSUER_KEY` and the content of the file `did.txt` will be used as the environment 
+variable `ISSUER_DID`. These values should be set in the file `.env` of this repository.
 More information on that below. 
 
 ### ngrok
@@ -93,7 +94,7 @@ $ git clone https://github.com/SourceCheckOrg/honorbox-api.git
 Install the dependencies
 ```
 $ cd honorbox-api
-$ npm i --update-binary
+$ npm i
 ```
 
 Set up the environment variables mentioned before in the file called `.env`. For
@@ -114,11 +115,10 @@ DATABASE_USERNAME=root
 DATABASE_PASSWORD=your_database_root_password
 DATABASE_SSL=false
 
-FRONTEND_HOST=http://localhost
-FRONTEND_PORT=3000
+FRONTEND_URL=http://localhost:3000
+PROFILE_URL=http://localhost:3001
+PREVIEW_URL=http://localhost:3002
 
-PREVIEW_HOST=http://localhost
-PREVIEW_PORT=3001
 
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
@@ -170,16 +170,14 @@ For now, some initial permissions should be configured manually.
 From the administration panel, click on "Settings"
 * Under USERS & PERMISSIONS PLUGIN, click on "Roles"
 * Click on the "Edit" button (Pencil) for the **Authenticated** role
-    * Under Permissions/Application/Publication, check `create`, `delete`, `find`,
-      `findone`, `preview`, `publish`, `update` and `verify`
-    * Under Permissions/Application/Publisher, check `create`, `find`, `findone` and `update
-      permissions`
-    * Under Permissions/Application/Royalty-Structure, check `create`, `delete`, `find`,
-      `findone` and `update`
+    * Under Permissions/Application/Domain, check `find`, `verify`
+    * Under Permissions/Application/Publication, check `create`, `delete`, `embed`, `find`,
+      `findone`, `update`
+    * Under Permissions/Application/Publisher, check `create`, `find`, `findone`, `update`
+    * Under Permissions/Application/Twitter, check `find`, `verify`
 * Under USERS & PERMISSIONS PLUGIN, click on "Roles" again
 * Click on the "Edit" button (Pencil) for the **Public** role
-    * Under Permissions/Application/Publications, check `preview` and `verify`
+    * Under Permissions/EthereumAuth/EthereumAuth, check `signin`, `signinnonce`, `signup`, `signupemailverification`, `signupnonce`, `updateuser`
     * Under Permissions/SourceCheck/Auth, check `signup`, `ssisignin`, `ssisigninrequest`, `ssisignup`, `ssisignuprequest`
-    * Under Permissions/SourceCheck/PublisherCredentials, check `publishercredentialissuance`, `publishercredentialoffer`, `publisherpresentationprocessing`, `publisherpresentationrequest`
 
 Congratulations! The API server is properly configured, up and running!
