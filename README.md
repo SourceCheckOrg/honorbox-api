@@ -178,6 +178,7 @@ From the administration panel, click on "Settings"
     * Under Permissions/EthereumAuth/EthereumAuth, check `updateuser`
 * Under USERS & PERMISSIONS PLUGIN, click on "Roles" again
 * Click on the "Edit" button (Pencil) for the **Public** role
+    * Under Permissions/Application/Profile, check `fetch`
     * Under Permissions/EthereumAuth/EthereumAuth, check `signin`, `signinnonce`, `signup`, `signupemailverification`, `signupnonce`
 
 Congratulations! The API server is properly configured, up and running!

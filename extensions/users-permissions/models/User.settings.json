@@ -90,6 +90,13 @@
     },
     "eth_profile_addr": {
       "type": "string"
+    },
+    "profile": {
+      "model": "profile",
+      "via": "owner"
+    },
+    "displayName": {
+      "type": "string"
     }
   }
 }

@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "profiles",
+  "info": {
+    "name": "Profile",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "eth_profile_addr": {
+      "type": "string"
+    },
+    "owner": {
+      "via": "profile",
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
