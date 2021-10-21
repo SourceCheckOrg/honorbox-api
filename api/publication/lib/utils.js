@@ -150,17 +150,19 @@ module.exports = {
     const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
     // Draw a string of text toward the top of the page
-    const fontSize = 12;
+    const fontSize = 12; 
     newPage.drawText( // TODO update this text
       `This eBook was published using the SourceCheck.org HonorBox Platform, which\n` + 
-      `cryptographically verifies publisher profile.\n` +  
+      `cryptographically verifies publisher profiles.\n` +  
       `If you enjoyed it, the publisher has requested a suggested donation equivalent to\n` + 
-      `10 $USD to be distributed between the contributors.\n` + 
-      `SourceCheck receives 2% of the donated valued to support the development of HonorBox\n` +
-      `Platform. Check out the verified profile at:\n\n` +
+      `10 $USD be distributed between the contributors.\n` + 
+      `SourceCheck Co-operative charges a 2% transaction fee of the donated valued to support\n` + 
+      `the development of HonorBox Platform, taken before distributing the donation.\n` +
+      `You can confirm the identity of the recipients of your donation by SourceCheck-ing\n`+ 
+      `their profile at:\n\n` +
       `${getProfileUrl(publication.owner)}\n\n` +
-      `To make a donation, send MATIC or any ERC-20 token to the following address (VALID \n` +
-      `ONLY ON POLYGON MAINNET): \n\n` +
+      `To make a donation, you can send MATIC or any ERC-20 token to the following address\n` + 
+      `(ONLY VALID ON THE POLYGON MAINNET):\n\n` +
       `${publication.owner.eth_profile_addr}\n\n` +
       `Or use the QR code bellow:`,
     {
