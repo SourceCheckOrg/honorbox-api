@@ -8,9 +8,25 @@
 module.exports = {
 
   async fetch(ctx) {
-    const { eth_profile_addr } = ctx.request.query;
-    console.log('eth_profile_addr', eth_profile_addr)
-    const user = await strapi.query('user', 'users-permissions').findOne({ eth_profile_addr });
+    const { eth_profile_addr, username } = ctx.request.query;
+    console.log('eth_profile_addr', eth_profile_addr);
+    console.log('username', username);
+
+    const query = {};
+    if (eth_profile_addr) {
+      query.eth_profile_addr = eth_profile_addr;
+    }
+    if (username) {
+      query.username = username;
+    }
+    const user = await strapi.query('user', 'users-permissions').findOne(query);
+
+    // Handle user not found!
+    if (!user) {
+      return ctx.send({
+        error: 'User not found!'
+      }, 404);
+    }
 
     const data = {
       profileAddr: user.eth_profile_addr,

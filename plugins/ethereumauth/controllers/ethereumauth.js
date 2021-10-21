@@ -254,14 +254,17 @@ module.exports = {
 
   updateUser: async (ctx) => {
     // Check if data was sent to update
-    const { ethAddr, ethProfileAddr } = ctx.request.body;
-    if (!ethAddr && !ethProfileAddr) {
+    const { displayName, ethAddr, ethProfileAddr } = ctx.request.body;
+    if (!displayName && !ethAddr && !ethProfileAddr) {
       return ctx.badRequest('No data sent to update!');
     }
 
     // Update user
     const id = ctx.state.user.id;
     const data = {}
+    if (displayName) {
+      data.displayName = displayName;
+    }
     if (ethAddr) {
       data.eth_addr = ethAddr;
     }
